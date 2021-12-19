@@ -10,7 +10,7 @@ import {
   FormSubmit
 } from './StyledComponents';
 
-export default function StartScreen({updateMyFieldState, changeScreen}) {
+export default function StartScreen({updateFieldSize, changeScreen, createMatrix}) {
   const [screenStatus, setScreenStatus] = useState('active');
   const [buttonState, setButtonState] = useState(true);
   const [inputState, setInputState] = useState({
@@ -31,7 +31,7 @@ export default function StartScreen({updateMyFieldState, changeScreen}) {
       setInputState({...inputState, [inputName]: ''}) :
       setInputState({...inputState, [inputName]: inputValue});
 
-    updateMyFieldState([inputName, inputValue]);
+    updateFieldSize(inputName, inputValue);
   }
 
   useEffect(() => {
@@ -49,6 +49,7 @@ export default function StartScreen({updateMyFieldState, changeScreen}) {
   const changeScreenHandler = () => {
     setScreenStatus('hidden');
     changeScreen();
+    createMatrix();
   }
 
   return (
@@ -75,11 +76,11 @@ export default function StartScreen({updateMyFieldState, changeScreen}) {
               name="fieldWidth"
               type="number"
               value={inputState.fieldWidth}
-              max="5"
-              min="1"
+              max="9"
+              min="3"
               onChange={formHandler}
             />
-            <FormDescription>(от 1-го до 5-ти)</FormDescription>
+            <FormDescription>(от 3-х до 9-ти)</FormDescription>
           </FormLayer>
 
           <FormLayer>
@@ -88,11 +89,11 @@ export default function StartScreen({updateMyFieldState, changeScreen}) {
               name="fieldHeight"
               type="number"
               value={inputState.fieldHeight}
-              max="5"
-              min="1"
+              max="9"
+              min="3"
               onChange={formHandler}
             />
-            <FormDescription>(от 1-го до 5-ти)</FormDescription>
+            <FormDescription>(от 3-х до 9-ти)</FormDescription>
           </FormLayer>
 
           <FormSubmit
