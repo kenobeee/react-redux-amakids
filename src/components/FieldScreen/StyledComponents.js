@@ -118,8 +118,8 @@ export const FieldCell = styled.span`
   background-image: none;
   
   transition: .3s;
-  
-  &[data-status^=start] {
+
+  &[data-status=start] {
     background-image: url(./media/steve.png);
   }
 
@@ -148,6 +148,15 @@ export const FieldCell = styled.span`
 
   &[data-finish=true] {
     opacity: 1;
+  }
+
+  &[data-status^=start-finish] {
+    opacity: 1;
+    background-image: url(./media/steve.png);
+    
+    &:focus {
+      background-image: url(./media/sheep.png);
+    }
   }
 `
 

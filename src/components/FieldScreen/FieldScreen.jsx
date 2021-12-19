@@ -5,10 +5,10 @@ import {
   FieldCellWrapper,
   FieldCell,
   WaySymbol
-} from './StyledComponent';
-import {useEffect, useState} from "react";
+} from './StyledComponents';
+import {useState} from "react";
 
-export default function FieldScreen({screenStatus, matrix, steps}) {
+export default function FieldScreen({changeScreen, screenStatus, matrix, steps, updateResultOfGame}) {
 
   const [wayState, setWayState] = useState(false);
   const [finishCellState, setFinishCellState] =  useState(false);
@@ -29,11 +29,17 @@ export default function FieldScreen({screenStatus, matrix, steps}) {
     const status = event.target.getAttribute('data-status');
     if (status === 'finish' || status === 'start-finish') {
       setFieldState('blocked');
-      // Логика фразы что я выиграл
+      updateResultOfGame('win');
+      setTimeout(() => {
+        changeScreen('secondScreen', 'thirdScreen');
+      }, 2000);
     } else {
       setFinishCellState(true);
       setFieldState('blocked');
-      // Логика фразы что я проиграл
+      updateResultOfGame('lose');
+      setTimeout(() => {
+        changeScreen('secondScreen', 'thirdScreen');
+      }, 2000);
     }
   }
 
@@ -41,27 +47,27 @@ export default function FieldScreen({screenStatus, matrix, steps}) {
     <FieldWrapper data-status={screenStatus}>
       <Field size={matrix.length} data-state={fieldState}>
         {matrix &&
-          matrix.map( (row, index) => {
-            return (
-              <FieldRow data-row={++index} size={matrix.length}>
-                {row &&
-                  row.map( (status, index) => {
-                    return (
-                      <FieldCellWrapper size={matrix.length}>
-                        <FieldCell
-                          data-column={++index}
-                          data-status={status}
-                          data-finish={status === 'finish' || status === 'start-finish' ? finishCellState : ''}
-                          onClick={checkStatusCell}
-                          tabIndex={0}
-                        />
-                      </FieldCellWrapper>
-                    )
-                  })
-                }
-              </FieldRow>
-            )
-          })
+          matrix.map( (row, index) => (
+            <FieldRow
+              key={index}
+              data-row={++index}
+              size={matrix.length
+            }>
+              {row &&
+                row.map( (status, index) => (
+                  <FieldCellWrapper key={index} size={matrix.length}>
+                    <FieldCell
+                      data-column={++index}
+                      data-status={status}
+                      data-finish={status === 'finish' || status === 'start-finish' ? finishCellState : ''}
+                      onClick={checkStatusCell}
+                      tabIndex={0}
+                    />
+                  </FieldCellWrapper>
+                ))
+              }
+            </FieldRow>
+          ))
         }
       </Field>
       <WaySymbol

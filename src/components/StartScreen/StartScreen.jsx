@@ -10,8 +10,7 @@ import {
   FormSubmit
 } from './StyledComponents';
 
-export default function StartScreen({updateFieldSize, changeScreen, createMatrix}) {
-  const [screenStatus, setScreenStatus] = useState('active');
+export default function StartScreen({changeScreen, screenStatus, updateFieldSize, createMatrix}) {
   const [buttonState, setButtonState] = useState(true);
   const [inputState, setInputState] = useState({
     stepCount: '',
@@ -47,8 +46,12 @@ export default function StartScreen({updateFieldSize, changeScreen, createMatrix
   ]);
 
   const changeScreenHandler = () => {
-    setScreenStatus('hidden');
-    changeScreen();
+    setInputState({
+      stepCount: '',
+      fieldWidth: '',
+      fieldHeight: ''
+    })
+    changeScreen('firstScreen', 'secondScreen');
     createMatrix();
   }
 

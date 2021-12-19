@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {updateFieldMatrixState, updateFieldSizeState} from "../../reducers/rootReducer";
 import {getRandomNumber} from '../../utils/getRandomNumber';
 
-export default function StartScreenContainer({changeScreen}) {
+export default function StartScreenContainer({changeScreen, screenStatus}) {
 
   const {stepCount, fieldWidth, fieldHeight} = useSelector(state => state);
   const dispatch = useDispatch();
@@ -106,8 +106,9 @@ export default function StartScreenContainer({changeScreen}) {
   return (
     <>
       <StartScreen
-        updateFieldSize={updateFieldSize}
         changeScreen={changeScreen}
+        screenStatus={screenStatus}
+        updateFieldSize={updateFieldSize}
         createMatrix={createMatrix}
       />
     </>
