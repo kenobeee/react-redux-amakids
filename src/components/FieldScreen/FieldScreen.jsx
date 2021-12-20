@@ -6,7 +6,7 @@ import {
   FieldCell,
   WaySymbol
 } from './StyledComponents';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 export default function FieldScreen({changeScreen, screenStatus, matrix, steps, updateResultOfGame}) {
 
@@ -42,6 +42,14 @@ export default function FieldScreen({changeScreen, screenStatus, matrix, steps, 
       }, 2000);
     }
   }
+
+  useEffect(() => {
+    if (screenStatus === 'hidden') {
+      setWayState(false);
+      setFinishCellState(false);
+      setFieldState('blocked');
+    }
+  }, [screenStatus, wayState, finishCellState, fieldState]);
 
   return (
     <FieldWrapper data-status={screenStatus}>
